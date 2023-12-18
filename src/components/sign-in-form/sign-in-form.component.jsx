@@ -5,8 +5,6 @@ import Button from "../button/button.component";
 
 import {
   signInAuthUserWithEmailAndPassword,
-  createUserDocumentFromAuth,
-  getSpecifiedDoc,
   signInWithGooglePopUp
 } from '../../utils/firebase/firebase.utils';
 
@@ -26,9 +24,8 @@ const SignInForm = () => {
   }
 
   const signInWithGoogle = async () => {
-    const { user } = await signInWithGooglePopUp();
-    console.log(user);
-    const userDocRef = await createUserDocumentFromAuth(user);
+    await signInWithGooglePopUp();
+    // console.log(user);
   }
 
   const handleChange = (event) => {
@@ -40,16 +37,16 @@ const SignInForm = () => {
     event.preventDefault();
 
     try {
-      const { user } = await signInAuthUserWithEmailAndPassword(email, password)
-      const userDocRef = await createUserDocumentFromAuth(user);
-      const docSnapShot = await getSpecifiedDoc(userDocRef);
-      console.log("docSnapShot.data():", docSnapShot.data());
+      await signInAuthUserWithEmailAndPassword(email, password)
       resetFormFields();
     } catch (error) {
-      if (error.code === "auth/invalid-credential"){
-        alert('incorrect password or email')
-      } else {
-        alert("something unexpected happened")
+      switch (error.code){
+        case "auth/invalid-credential":
+          alert('incorrect password or email')
+          break;
+        default:
+          alert("something unexpected happened")
+          console.log(error);
       }
     }
   }
