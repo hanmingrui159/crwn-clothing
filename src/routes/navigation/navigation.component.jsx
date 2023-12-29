@@ -36,7 +36,6 @@ const Navigation = () => {
           )}
           <CartIcon />
           {isCartOpen && <CartDropdown />}
-          
         </div>
       </div>
       <Outlet />
