@@ -15,7 +15,7 @@ import { NavigationContainer } from './navigation.styles'
 const Navigation = () => {
   const { currentUser } = useContext(UserContext);
   const { isCartOpen } = useContext(CartContext);
-  console.log("visibility:", isCartOpen)
+  // console.log("visibility:", isCartOpen)
 
   return (
     <Fragment>
